@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# السماح باستخدام postgres user
+export ALLOW_ADMIN_USER=True
+
 # تشغيل Odoo مع المتغيرات البيئية
 exec odoo \
   --addons-path=/mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons \
@@ -9,4 +12,5 @@ exec odoo \
   --db_user=${PGUSER} \
   --db_password=${PGPASSWORD} \
   --http-port=8069 \
-  --proxy-mode
+  --proxy-mode \
+  --no-database-list
