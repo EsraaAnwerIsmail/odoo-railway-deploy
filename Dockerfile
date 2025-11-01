@@ -11,5 +11,5 @@ RUN pip3 install --no-cache-dir xlsxwriter
 # الرجوع لمستخدم odoo
 USER odoo
 
-# تشغيل Odoo
-CMD ["odoo"]
+# تشغيل Odoo مع المتغيرات البيئية
+CMD ["odoo", "--addons-path=/mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons", "--db_host=$PGHOST", "--db_port=$PGPORT", "--db_user=$PGUSER", "--db_password=$PGPASSWORD"]
