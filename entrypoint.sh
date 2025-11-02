@@ -6,12 +6,11 @@ echo "Starting Odoo entrypoint..."
 # إنشاء odoo user في PostgreSQL إذا لم يكن موجوداً
 echo "Creating odoo database user..."
 PGPASSWORD=$PGPASSWORD psql -h $PGHOST -p $PGPORT -U $PGUSER -d postgres -tc "SELECT 1 FROM pg_user WHERE usename = 'odoo'" | grep -q 1 || \
-PGPASSWORD=$PGPASSWORD psql -h $PGHOST -p $PGPORT -U $PGUSER -d postgres -c "CREATE USER odoo WITH PASSWORD '$PGPASSWORD' CREATEDB;"
+PGPASSWORD=$PGPASSWORD psql -h $PGHOST -p $PGPORT -U $PGUSER -d postgres -c "CREATE USER odoo WITH PASSWORD '$PGPASSWORD' SUPERUSER CREATEDB CREATEROLE;"
 
-# منح صلاحيات لـ odoo user
-echo "Granting permissions..."
-PGPASSWORD=$PGPASSWORD psql -h $PGHOST -p $PGPORT -U $PGUSER -d postgres -c "ALTER USER odoo CREATEDB;"
-PGPASSWORD=$PGPASSWORD psql -h $PGHOST -p $PGPORT -U $PGUSER -d postgres -c "GRANT ALL PRIVILEGES ON DATABASE $PGDATABASE TO odoo;" || true
+# منح جميع الصلاحيات
+echo "Granting all privileges..."
+PGPASSWORD=$PGPASSWORD psql -h $PGHOST -p $PGPORT -U $PGUSER -d postgres -c "ALTER USER odoo SUPERUSER CREATEDB CREATEROLE;"
 
 # كتابة ملف odoo.conf
 echo "Writing odoo.conf..."
