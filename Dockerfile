@@ -1,13 +1,9 @@
-FROM odoo:17.0
+FROM odoo:16.0
 
 USER root
 
 # نسخ الموديولات المخصصة
 COPY ./custom_addons /mnt/extra-addons/
-
-# نسخ Python wrapper
-COPY ./odoo_wrapper.py /usr/local/bin/odoo_wrapper.py
-RUN chmod +x /usr/local/bin/odoo_wrapper.py
 
 # نسخ entrypoint script
 COPY ./entrypoint.sh /entrypoint.sh
