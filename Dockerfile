@@ -5,12 +5,9 @@ USER root
 # نسخ الموديولات المخصصة
 COPY ./custom_addons /mnt/extra-addons/
 
-# نسخ patch script
-COPY ./fix_postgres_check.sh /fix_postgres_check.sh
-RUN chmod +x /fix_postgres_check.sh
-
-# تطبيق الـ patch
-RUN /fix_postgres_check.sh
+# نسخ Python wrapper
+COPY ./odoo_wrapper.py /usr/local/bin/odoo_wrapper.py
+RUN chmod +x /usr/local/bin/odoo_wrapper.py
 
 # نسخ entrypoint script
 COPY ./entrypoint.sh /entrypoint.sh
