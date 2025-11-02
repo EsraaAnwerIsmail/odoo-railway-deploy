@@ -2,18 +2,15 @@ FROM odoo:17.0
 
 USER root
 
-# تثبيت postgresql-client
-RUN apt-get update && apt-get install -y postgresql-client && rm -rf /var/lib/apt/lists/*
-
 # نسخ الموديولات المخصصة
 COPY ./custom_addons /mnt/extra-addons/
 
 # نسخ patch script
-COPY ./patch_odoo.py /patch_odoo.py
-RUN chmod +x /patch_odoo.py
+COPY ./fix_postgres_check.sh /fix_postgres_check.sh
+RUN chmod +x /fix_postgres_check.sh
 
 # تطبيق الـ patch
-RUN python3 /patch_odoo.py
+RUN /fix_postgres_check.sh
 
 # نسخ entrypoint script
 COPY ./entrypoint.sh /entrypoint.sh

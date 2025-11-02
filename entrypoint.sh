@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "Starting Odoo..."
+echo "=== Starting Odoo 17 ==="
 
 # كتابة ملف odoo.conf
 cat > /etc/odoo/odoo.conf << EOF
@@ -21,5 +21,7 @@ limit_time_real = 1200
 list_db = True
 EOF
 
-echo "Starting Odoo with config..."
+echo "✓ Configuration file created"
+echo "✓ Starting Odoo..."
+
 exec odoo -c /etc/odoo/odoo.conf
